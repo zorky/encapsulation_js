@@ -48,10 +48,44 @@ var Form = function() {
     });       
 }; // forme 2
 
+function FormBis() {
+    var item = 'none';
+    var select_selector = 'select_color';
+    var change_color = 'change_color';
+    var _onSelect = function(selector) {
+        $(`#${selector}`).on('click', function() {                                           
+            item = $(`#${selector}>option:selected`).val();
+            Action.ButtonDisabled(change_color, item === 'none');                        
+        });
+    };
+    var _onSubmit = function(selector) {
+        $(`#${selector}`).click(function() {
+            Action.ChangeColor(item);
+        }); 
+    };
+    var _init = function() {        
+        _onSelect(select_selector);
+        _onSubmit(change_color);
+    };
+    this.init = function() {
+        _init();
+    };
+    this.getItem = function() {
+        return item;
+    };
+    this.onSubmit = function() {
+        _onSubmit();
+    };
+    this.onSelect = function() {
+        _onSelect();
+    };
+} // forme 3
+
 var Init = {
     form: null,
     initialize: function() {
         var form = Form();
+        // var form = new FormBis();
         this.form = form;
         form.init();
         return form;
@@ -59,7 +93,8 @@ var Init = {
     getForm: function() {
         return this.form;
     }
-}; // forme 3
+}; // forme 4
+
 
 var compteur = (function(max, start_after_sec) {
     var _one_second = 1000;    
