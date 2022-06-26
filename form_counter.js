@@ -35,6 +35,7 @@ function FormCounter() {
 
     var _onClickButton = function(selector, strategie) {
         $(`#${selector}`).click(function() {
+            console.log('click !');
             var val = $(`#${number_selector}`).val();
             var number = Number(val) || number;
             _toggleButtons(true);
@@ -82,3 +83,6 @@ var InitFormCounter = {
         return this.formCounter;
     }
 };
+(function() {        
+  InitFormCounter.initialize();
+})();

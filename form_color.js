@@ -54,3 +54,7 @@ var FormColor = function() {
         onSelect: _onSelect
     });       
 };
+(function() {     
+    var formColor = FormColor();
+    formColor.init();
+  })();
