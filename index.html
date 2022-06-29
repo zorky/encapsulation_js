@@ -19,16 +19,23 @@
                       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                         <div class="input-group mb-3">
                           <span class="input-group-text" id="basic-addon1">#</span>
-                          <input type="text" class="form-control" placeholder="Nombre" 
+                          <input type="number" class="form-control" placeholder="Nombre"
                                  aria-label="Nombre" aria-describedby="basic-addon1" id="number" value="10">
                         </div>
                         <button type="button" class="btn btn-primary btn-lg px-7" id="btn_countdown">Compte à rebours</button>      
                         <button type="button" class="btn btn-primary btn-lg px-7" id="btn_countup">Chrono</button>  
                         <button type="button" class="btn btn-primary btn-lg px-7" id="btn_stopcount" disabled>Stop</button>                        
                       </div>
-                      
                     </div>
-                  </div>
+                    <div class="col-lg-6 mx-auto">
+                        <div>
+                            <h3><span id="display_chrono"></span></h3>
+                        </div>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <button type="button" class="btn btn-primary btn-lg px-7" id="btn_display_factorielle">Factorielle de chaque nombre du compteur</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </body>

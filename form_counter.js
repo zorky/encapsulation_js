@@ -4,9 +4,11 @@ function FormCounter() {
     var number = 10;
     var number_selector = 'number';
     var number_display_selector = 'display_count';
+    var display_selector = 'display_chrono';
     var btn_countdown = 'btn_countdown';
     var btn_countup = 'btn_countup';
     var btn_stop = 'btn_stopcount';
+    var btn_display = 'btn_display_factorielle';
     var Strategie = {
         COUNT_DOWN: 1,
         COUNT_UP: 2
@@ -32,12 +34,20 @@ function FormCounter() {
     var _displayCountUp = function(_number) {
         _displayNumber(_number === number, _number.toString());
     };
-
-    var _onClickButton = function(selector, strategie) {
+    var _check_number = function(number) {
+        if (number <= 0) {
+            throw new Error('le nombre ne peut être négatif !');
+        }
+    };
+    var _get_number = function () {
+        var val = $(`#${number_selector}`).val();
+        number = Number(val) || number;
+        _check_number(number);
+        return number;
+    };
+    var _onClickButtonCountDecount = function(selector, strategie) {
         $(`#${selector}`).click(function() {
-            console.log('click !');
-            var val = $(`#${number_selector}`).val();
-            var number = Number(val) || number;
+            number = _get_number();
             _toggleButtons(true);
             if (strategie === Strategie.COUNT_DOWN) {
                 _compteur = compteur(number, 1, _displayCountDown);
@@ -58,10 +68,29 @@ function FormCounter() {
             }
         });
     };
-    var _init = function() {        
-        _onClickButton(btn_countdown, Strategie.COUNT_DOWN);
-        _onClickButton(btn_countup, Strategie.COUNT_UP);
+    var _onClickDisplay = function(selector) {
+        var fact = function(n) {
+            if (n === 0) {
+                return 1;
+            }
+            return n * fact(n - 1);
+        }
+        $(`#${selector}`).click(function() {
+            var __n = '';
+            var __number = _get_number();
+            var __compteur = compteur(__number, 1, function(n) {
+                var res = fact(n);
+                __n = `${__n} ${res}`;
+                $(`#${display_selector}`).text(__n);
+            });
+            __compteur.display();
+        });
+    }
+    var _init = function() {
+        _onClickButtonCountDecount(btn_countdown, Strategie.COUNT_DOWN);
+        _onClickButtonCountDecount(btn_countup, Strategie.COUNT_UP);
         _onClickStop(btn_stop);
+        _onClickDisplay(btn_display)
     };
     this.init = function() {
         _init();
@@ -83,6 +112,6 @@ var InitFormCounter = {
         return this.formCounter;
     }
 };
-(function() {        
+(function() {
   InitFormCounter.initialize();
 })();

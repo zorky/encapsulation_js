@@ -3,8 +3,7 @@
 var compteur = (function(max, start_after_sec, callBack) {
     var _one_second = 1_000;    
     var _default_second = _one_second * 2;
-    var _max = max || 10;    
-    console.log(max);
+    var _max = max || 10;
     var _start_until = _get_ms_sec(start_after_sec);
     var _interval;
     var Operator = {
@@ -15,11 +14,8 @@ var compteur = (function(max, start_after_sec, callBack) {
         throw new Error('le callBack est obligatoire');
     }
     var _callBack = callBack;
-    function _get_ms_sec(sec) {        
-        if (sec) {
-            return _one_second * sec;
-        }
-        return _default_second;
+    function _get_ms_sec(sec) {
+        return sec ? _one_second * sec : _default_second;
     }
     var _print = function(i, text = 'count =>') {
         console.log(`${text} ${i}`);
@@ -56,18 +52,18 @@ var compteur = (function(max, start_after_sec, callBack) {
             _i = _iifeCondition(_i <= _to, _i, Operator.PLUS, _interval);  
         }, _one_second);    
     };
-    var _start = function(_start_after_sec) {
-        _start_until = _get_ms_sec(_start_after_sec);
-        for (var i = 0; i < _max; i++) {
+    var _count_to_after_n_sec = function(_start_after_sec) {
+        _start_until = _get_ms_sec(_start_after_sec || start_after_sec);
+        for (var i = 1; i <= _max; i++) {
             (function(_i) {
-                setTimeout(function() { _print(_i, 'count => ') }, _start_until);
-            })(i);                          
+                setTimeout(_callBack(_i), _start_until);
+            })(i);
         }
     }
     return ({
         count: _count_to,
         decount: _decount_from,
         stop: _stop_count,
-        start: _start
+        display: _count_to_after_n_sec
     });
 }); // compteur
