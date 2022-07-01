@@ -24,9 +24,7 @@ var compteur = (function(max, start_after_sec, callBack) {
         _print(_cnt);
         _callBack(_cnt);
     });
-    var _iifeCondition = function(condition, n, operator, interval) {
-        console.log(n);
-        console.log(condition);
+    var _timerCondition = function(condition, n, operator, interval) {
         if (condition) {
             _iifeCallback(n);
             return n + operator;
@@ -42,14 +40,14 @@ var compteur = (function(max, start_after_sec, callBack) {
     var _decount_from = function(max) {
         var _i = max || _max; 
         _interval = setInterval(function() {
-            _i = _iifeCondition(_i >= 0, _i, Operator.MINUS, _interval);
+            _i = _timerCondition(_i >= 0, _i, Operator.MINUS, _interval);
         }, _one_second);                        
     };
     var _count_to = function(max) {
         var _to = max || _max;
         var _i = 1;
         _interval = setInterval(function() {
-            _i = _iifeCondition(_i <= _to, _i, Operator.PLUS, _interval);  
+            _i = _timerCondition(_i <= _to, _i, Operator.PLUS, _interval);
         }, _one_second);    
     };
     var _count_to_after_n_sec = function(_start_after_sec) {
