@@ -8,12 +8,11 @@ Action = Action || {};
         console.log(msg);
     };
     const _disabled = function button_submit_disabled(selector, disabled) {
-        // $(`#${selector}`).prop('disabled', disabled);
-        console.log(selector, disabled);
         document.getElementById(selector).disabled = disabled;
     };
     Action.ChangeColor = function(selector, color, choices) {
         if (choices.includes(color)) {
+            console.log(selector, color, choices);
             _changeColor(color);
             /*console.log(`change color to ${color}`);
             console.log(`change choices to: ${choices}`);
@@ -36,17 +35,25 @@ const FormColor = function () {
     const change_color = 'btn_change_color';
     const choices_color = ['btn-light', 'btn-primary', 'btn-danger', 'btn-success'];
     const _onSelect = function (selector) {
+        /*document.getElementById(selector).addEventListener('click', function () {
+            const selectElement = document.getElementById(selector);
+            console.log(selectElement.options);
+            // const item = selectElement.value; // La valeur de l'option sélectionnée
+            // Action.ButtonDisabled(change_color, item === 'none');
+            Action.ButtonDisabled(change_color, selectElement.options.selectedIndex === 0);
+        });*/
         $(`#${selector}`).on('click', function () {
             item = $(`#${selector}>option:selected`).val();
             Action.ButtonDisabled(change_color, item === 'none');
         });
     };
     const _onSubmit = function (selector) {
-        $(`#${selector}`).click(function () {
+        document.getElementById(selector).addEventListener('click', function () {
             Action.ChangeColor('btn_change_color', item, choices_color);
         });
     };
     const _init = function () {
+        console.log('_init', item);
         _onSelect(select_selector);
         _onSubmit(change_color);
     };
@@ -64,4 +71,4 @@ const FormColor = function () {
 (function() {
     const formColor = FormColor();
     formColor.init();
-  })();
+})();
