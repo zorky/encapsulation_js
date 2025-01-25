@@ -1,19 +1,19 @@
 ;
 'use strict';
-let Action;
-Action = Action || {};
-(function() {
-    const _changeColor = function (color) {
-        var msg = `change color to ${color}`;
-        console.log(msg);
+/* polyfill includes ES5 */
+if (!Array.prototype.includes) {
+    Array.prototype.includes = function(element) {
+        return this.indexOf(element) !== -1;
     };
-    const _disabled = function button_submit_disabled(selector, disabled) {
+}
+var Action = Action || {};
+(function() {
+    var _disabled = function button_submit_disabled(selector, disabled) {
         document.getElementById(selector).disabled = disabled;
     };
     Action.ChangeColor = function(selector, color, choices) {
         if (choices.includes(color)) {
             // https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
-            _changeColor(color);
             document.getElementById(selector).classList.remove(...choices);
             document.getElementById(selector).classList.add(color);
         }
@@ -24,30 +24,29 @@ Action = Action || {};
     }    
 })();
 
-const FormColor = function () {
-    const select_selector = 'select_color';
-    const change_color = 'btn_change_color';
-    const choices_color = ['btn-light', 'btn-primary', 'btn-danger', 'btn-success'];
-    let color_to_change = 'none';
-    const _onSelect = function (selector) {
+var FormColor = function () {
+    var select_selector = 'select_color';
+    var change_color = 'btn_change_color';
+    var choices_color = ['btn-light', 'btn-primary', 'btn-danger', 'btn-success'];
+    var color_to_change = 'none';
+    var _onSelect = function (selector) {
         document.getElementById(selector).addEventListener('click', function () {
             color_to_change = this.value;
             Action.ButtonDisabled(change_color, color_to_change === 'none');
         });
     };
-    const _onSubmit = function (selector) {
+    var _onSubmit = function (selector) {
         document.getElementById(selector).addEventListener('click', function () {
             if (choices_color.includes(color_to_change)) {
-                console.log('change color ', color_to_change);
                 Action.ChangeColor('btn_change_color', color_to_change, choices_color);
             }
         });
     };
-    const _init = function () {
+    var _init = function () {
         _onSelect(select_selector);
         _onSubmit(change_color);
     };
-    const _getColorToChange = function () {
+    var _getColorToChange = function () {
         return color_to_change;
     };
 
@@ -59,6 +58,6 @@ const FormColor = function () {
     });
 };
 (function() {
-    const formColor = FormColor();
+    var formColor = FormColor();
     formColor.init();
 })();
