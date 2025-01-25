@@ -25,40 +25,35 @@ Action = Action || {};
 })();
 
 const FormColor = function () {
-    let item = 'none';
     const select_selector = 'select_color';
     const change_color = 'btn_change_color';
     const choices_color = ['btn-light', 'btn-primary', 'btn-danger', 'btn-success'];
+    let color_to_change = 'none';
     const _onSelect = function (selector) {
-        /*document.getElementById(selector).addEventListener('click', function () {
-            const selectElement = document.getElementById(selector);
-            console.log(selectElement.options);
-            // const item = selectElement.value; // La valeur de l'option sélectionnée
-            // Action.ButtonDisabled(change_color, item === 'none');
-            Action.ButtonDisabled(change_color, selectElement.options.selectedIndex === 0);
-        });*/
-        $(`#${selector}`).on('click', function () {
-            item = $(`#${selector}>option:selected`).val();
-            Action.ButtonDisabled(change_color, item === 'none');
+        document.getElementById(selector).addEventListener('click', function () {
+            color_to_change = this.value;
+            Action.ButtonDisabled(change_color, color_to_change === 'none');
         });
     };
     const _onSubmit = function (selector) {
         document.getElementById(selector).addEventListener('click', function () {
-            Action.ChangeColor('btn_change_color', item, choices_color);
+            if (choices_color.includes(color_to_change)) {
+                console.log('change color ', color_to_change);
+                Action.ChangeColor('btn_change_color', color_to_change, choices_color);
+            }
         });
     };
     const _init = function () {
-        console.log('_init', item);
         _onSelect(select_selector);
         _onSubmit(change_color);
     };
-    const _getitem = function () {
-        return item;
+    const _getColorToChange = function () {
+        return color_to_change;
     };
 
     return ({
         init: _init,
-        getItem: _getitem,
+        getColorToChange: _getColorToChange,
         onSubmit: _onSubmit,
         onSelect: _onSelect
     });
