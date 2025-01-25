@@ -61,7 +61,7 @@ var FormColor = function () {
         onSelect: _onSelect
     });
 };
-/** init **/
+/** init - sera déclenchée immédiatement **/
 (function() {
     var formColor = FormColor();
     formColor.init();
