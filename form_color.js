@@ -12,15 +12,10 @@ Action = Action || {};
     };
     Action.ChangeColor = function(selector, color, choices) {
         if (choices.includes(color)) {
-            console.log(selector, color, choices);
+            // https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
             _changeColor(color);
-            /*console.log(`change color to ${color}`);
-            console.log(`change choices to: ${choices}`);
-            console.log(`${document.getElementById(selector).classList}`);
-            document.getElementById(selector).classList.remove(choices);
-            document.getElementById(selector).classList.add(color);*/
-            $(`#${selector}`).removeClass(choices);
-            $(`#${selector}`).addClass(color);
+            document.getElementById(selector).classList.remove(...choices);
+            document.getElementById(selector).classList.add(color);
         }
     }
 
