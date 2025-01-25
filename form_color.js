@@ -6,6 +6,7 @@ if (!Array.prototype.includes) {
         return this.indexOf(element) !== -1;
     };
 }
+/** actions sur le bouton : fonctions "statiques" **/
 var Action = Action || {};
 (function() {
     var _disabled = function button_submit_disabled(selector, disabled) {
@@ -18,13 +19,14 @@ var Action = Action || {};
             document.getElementById(selector).classList.add(color);
         }
     }
-
+    /** fonction statique **/
     Action.ButtonDisabled = function(selector, disabled) {
         _disabled(selector, disabled);
     }    
 })();
-
+/** la logique sur le formulaire via l'objet FormColor et ses fonctions publiques **/
 var FormColor = function () {
+    /** proprités et fonctions privées */
     var select_selector = 'select_color';
     var change_color = 'btn_change_color';
     var choices_color = ['btn-light', 'btn-primary', 'btn-danger', 'btn-success'];
@@ -49,7 +51,9 @@ var FormColor = function () {
     var _getColorToChange = function () {
         return color_to_change;
     };
-
+    /** exposition des fonctions publiques
+     * on pourrait appeler de l'extérieur : form.init(), form.onSubmit(), tout en n'accédant pas aux fonctions internes _fun()
+     * **/
     return ({
         init: _init,
         getColorToChange: _getColorToChange,
@@ -57,6 +61,7 @@ var FormColor = function () {
         onSelect: _onSelect
     });
 };
+/** init **/
 (function() {
     var formColor = FormColor();
     formColor.init();
